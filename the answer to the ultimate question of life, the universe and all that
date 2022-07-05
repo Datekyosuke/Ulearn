@@ -1,0 +1,9 @@
+public static double GetSquare(double a)
+{
+	return Math.Pow(a, 2);
+}
+public static void Print(double a)
+{
+	Console.WriteLine(a);	
+}
+
