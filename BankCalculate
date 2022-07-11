@@ -1,0 +1,21 @@
+namespace Bankcalculate
+{
+	class Program
+	{
+		static void Main()
+		{
+			string stroka = Console.ReadLine();
+			Console.WriteLine(Calculate(stroka));
+		}
+
+		static double Calculate(string allvariable)
+		{
+			var allVariablesChar = allvariable.Split(' ');
+			double sum = double.Parse(allVariablesChar[0]);
+			double percent = double.Parse(allVariablesChar[1]) / 12;
+			double time = double.Parse(allVariablesChar[2]);
+			double calculateSum = (double)sum * Math.Pow((1 + percent / 100), time);
+			return calculateSum;
+		}
+	}
+}
