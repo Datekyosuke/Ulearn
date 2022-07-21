@@ -1,0 +1,9 @@
+public static string RemoveStartSpacem(string text)
+{
+	while(char.IsWhiteSpace(text[0]))
+	{
+		text = text.Substring(1);
+		if(text == "") break;
+	}
+    return text;
+}
