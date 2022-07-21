@@ -1,0 +1,9 @@
+private static void WriteTextWithBorder(string text)
+{
+	string manyMinus = null;
+	for (int i=0; i<text.Length+2; i++)
+		manyMinus+="-";
+	Console.WriteLine("+" + manyMinus + "+");
+	Console.WriteLine("| " + text + " |");
+	Console.WriteLine("+" + manyMinus + "+");
+}
