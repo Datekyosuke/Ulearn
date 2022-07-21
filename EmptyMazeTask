@@ -1,0 +1,13 @@
+namespace Mazes
+{
+	public static class EmptyMazeTask
+	{
+		public static void MoveOut(Robot robot, int width, int height)
+		{
+			for (int y = 0; y < height - 3; y++)
+				robot.MoveTo(Direction.Down);
+			for (int x = 0; x < width - 3; x++)
+				robot.MoveTo(Direction.Right);
+		}
+	}
+}
