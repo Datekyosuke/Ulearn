@@ -1,0 +1,38 @@
+// В этом пространстве имен содержатся средства для работы с изображениями. 
+// Чтобы оно стало доступно, в проект был подключен Reference на сборку System.Drawing.dll
+using System.Drawing;
+
+namespace Fractals
+{
+	internal static class DragonFractalTask
+	{
+		
+		public static void DrawDragonFractal(Pixels pixels, int iterationsCount, int seed)
+		{
+			var random = new System.Random(seed);
+
+			double x = 1;
+			double y = 0;
+			pixels.SetPixel(x, y);
+			for (int i = 0; i < iterationsCount; i++)
+			{
+				double x1 = 0;
+				var nextNumber = random.Next(2);
+				if (nextNumber > 0)
+                {
+					x1 = (x - y) / 2;
+					y = (x + y) / 2;
+					x = x1;
+                }
+				else
+				{
+					x1 = (-x - y) / 2 + 1;
+					y = (x - y) / 2;
+					x = x1;
+				}
+				pixels.SetPixel(x, y);
+            }
+			
+		}
+	}
+}
