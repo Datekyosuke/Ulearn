@@ -1,0 +1,35 @@
+using System.Drawing;
+
+namespace Fractals
+{
+	internal static class DragonFractalTask
+	{
+		public struct Coords
+        {
+			public double x, y;
+        }
+		public static Coords Transformation(Coords coord, int move)
+        {
+			Coords newCoords;
+			newCoords.x = (coord.x - coord.y) / 2 + move;
+			newCoords.y = (coord.x + coord.y) / 2;
+			return newCoords;
+        }
+		public static void DrawDragonFractal(Pixels pixels, int iterationsCount, int seed)
+		{
+			var random = new System.Random(seed);
+			var coord = new Coords();
+			coord.x = 1;
+			coord.y = 0;
+			for (int i = 0; i < iterationsCount; i++)
+            {
+				var nextNumber = random.Next(2);
+				if (nextNumber > 0)
+					coord = Transformation(coord, 0);
+				else
+					coord = Transformation(coord, 1);
+				pixels.SetPixel(coord.x, coord.y);
+            }
+		}
+	}
+}
