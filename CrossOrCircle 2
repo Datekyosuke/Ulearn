@@ -1,0 +1,23 @@
+public static int CrossOrCircle(Mark mark)
+{
+	int rez =0;
+		if( mark == Mark.Cross) rez =1;
+	else if (mark == Mark.Circle) rez = 2;
+	else rez = 10;
+	return rez;
+}
+public static GameResult GetGameResult(Mark[,] field)
+{
+	int flag = 0;
+	var diagHorSum = new int[8];
+	for (int i = 0; i < 3; i++)
+	{
+		diagHorSum[i] = CrossOrCircle(field[i, 0]) + CrossOrCircle(field[i, 1]) + CrossOrCircle(field[i, 2]);
+		diagHorSum[i+3] = CrossOrCircle(field[0, i]) + CrossOrCircle(field[1, i]) + CrossOrCircle(field[2, i]);
+	}
+	diagHorSum[6] = CrossOrCircle(field[0, 0]) + CrossOrCircle(field[1, 1]) + CrossOrCircle(field[2, 2]);
+	diagHorSum[7] = CrossOrCircle(field[0, 2]) + CrossOrCircle(field[1, 1]) + CrossOrCircle(field[2, 0]);
+	foreach (int x in diagHorSum)
+		flag += x == 3 ? 1 : ( x == 6 ? 2 : 3);
+	return flag == 1 ? GameResult.CrossWin : ( flag == 2 ? GameResult.CircleWin : GameResult.Draw);
+}
