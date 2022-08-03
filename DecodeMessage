@@ -1,0 +1,13 @@
+private static string DecodeMessage(string[] lines)
+{
+string a = "";
+foreach (string e in lines)
+    a += e + " ";
+string[] b = a.Split(' ');
+Array.Reverse(b);
+a = "";
+for (int i = 0; i < b.Length; i++)
+    if (b[i].Length != 0 && Char.IsUpper(b[i], 0))
+        a += b[i] + " ";
+return a;
+}
