@@ -1,0 +1,11 @@
+private static string ApplyCommands(string[] commands)
+{
+	var returnString = new StringBuilder();
+	foreach ( string line in commands)
+	{
+		if(line[1] == 'u')
+			returnString.Append(line.Substring(5));
+		else returnString.Remove(returnString.Length - int.Parse(line.Substring(4)), int.Parse(line.Substring(4)));
+	}
+	return returnString.ToString();
+}
