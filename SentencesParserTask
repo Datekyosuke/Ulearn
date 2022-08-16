@@ -1,0 +1,38 @@
+using System.Collections.Generic;
+using System.Text;
+
+namespace TextAnalysis
+{
+    static class SentencesParserTask
+    {
+        public static List<string> GetListOfWorld(string sentence)
+        {
+            List<string> result = new List<string>();
+            var builder = new StringBuilder();
+            foreach (var word in sentence)
+            {
+                if (char.IsLetter(word) || word == '\'')
+                    builder.Append(word.ToString().ToLower());
+                else builder.Append(" ");
+            }
+            var newList = builder.ToString().Split(' ');
+            foreach(var word in newList)
+                if(!string.IsNullOrEmpty(word)) result.Add(word);
+            return result;
+
+        }
+        public static List<List<string>> ParseSentences(string text)
+        {
+            var sentencesList = new List<List<string>>();
+            var sentences = text.Split(new char[] { '.', '!', '?', ';', ':', '(', ')' }, System.StringSplitOptions.RemoveEmptyEntries);
+            var newList = new List<string>();
+            foreach (var sentence in sentences)
+            {
+                newList = GetListOfWorld(sentence);
+                if (newList.Capacity > 0)
+                    sentencesList.Add(newList);
+            }
+            return sentencesList;
+        }
+    }
+}
