@@ -1,0 +1,51 @@
+namespace GeometryTasks
+{
+    public class Vector
+    {
+        public double X;
+        public double Y;
+
+        public Vector()
+        {
+        }
+
+        public Vector(double x, double y)
+            {
+                X = x;
+                Y = y;
+            }
+    }
+    public class Geometry
+    {
+        public static double GetLength(Vector vector)
+        {
+            return System.Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
+        }
+        public static Vector Add(Vector vector1, Vector vector2)
+        {
+            return new Vector((vector1.X + vector2.X), (vector1.Y + vector2.Y));
+        }
+        public static double GetLength(Segment segment)
+        {
+            return System.Math.Round(System.Math.Sqrt(System.Math.Pow((segment.Begin.X - segment.End.X), 2) + System.Math.Pow((segment.Begin.Y - segment.End.Y), 2)), 3);
+        }
+        public static bool IsVectorInSegment(Vector vector, Segment segment)
+        {
+            return GetLength(segment) == GetLength(new Segment(segment.Begin, vector)) + GetLength(new Segment(vector, segment.End));
+        }
+    }
+    public class Segment
+    {
+        public Vector Begin = new Vector();
+        public Vector End = new Vector();
+
+        public Segment(Vector begin, Vector end)
+        {
+            Begin = begin;
+            End = end;
+        }
+        public Segment()
+        {
+        }
+    }
+}
