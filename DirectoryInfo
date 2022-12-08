@@ -1,0 +1,9 @@
+public static List<DirectoryInfo> GetAlbums(List<FileInfo> files)
+{
+	var result = new Dictionary<string, DirectoryInfo>();
+	foreach (var file in files)
+		if(file.Name.EndsWith(".mp3") || file.Name.EndsWith(".wav"))
+		if (!result.ContainsKey(file.Directory.FullName))
+			result.Add(file.Directory.FullName, file.Directory);
+	return new List<DirectoryInfo>(result.Values);
+}		 
