@@ -1,0 +1,14 @@
+class Book : IComparable
+{
+	public string Title;
+	public int Theme;
+
+    public int CompareTo(object? obj)
+        {
+            var book = obj as Book;
+            if (book.Theme.CompareTo(Theme) == 0)
+                return -(book.Title.CompareTo(Title));
+	    else return -(book.Theme.CompareTo(Theme));
+	    throw new NotImplementedException();
+        }
+}
