@@ -1,0 +1,23 @@
+private static Array? Combine(params Array[] arrays)
+	{
+		int summaryLength = 0;
+		for (int i = 0; i < arrays.Length; i++)
+		{
+			summaryLength += arrays[i].Length;
+		}
+		if (summaryLength > 0) { 
+		var result = Array.CreateInstance(arrays[0].GetType().GetElementType(), summaryLength);
+		int offset = 0;
+		for (int i = 0; i < arrays.Length; i++)
+		{
+				if (arrays[0].GetType().GetElementType() != arrays[i].GetType().GetElementType()) return null;
+				else
+				{
+					arrays[i].CopyTo(result, offset);
+					offset += arrays[i].Length;
+				}
+		}
+		return result;
+		} else  return null; 
+
+	}
