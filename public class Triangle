@@ -1,0 +1,10 @@
+public class Triangle
+{
+	public Point A;
+	public Point B;
+	public Point C;
+	public override string ToString()
+	{
+		return string.Format("({0}) ({1}) ({2})", A, B, C);
+	}
+}
