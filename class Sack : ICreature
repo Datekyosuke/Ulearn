@@ -1,0 +1,143 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Digger
+{
+    class Terrain : ICreature
+    {
+        public CreatureCommand Act(int x, int y)
+        {
+            return new CreatureCommand() { DeltaX = 0, DeltaY = 0};
+        }
+
+        public bool DeadInConflict(ICreature conflictedObject)
+        {
+            return true;
+        }
+
+        public int GetDrawingPriority()
+        {
+            return 1;
+        }
+
+        public string GetImageFileName()
+        {
+            return "Terrain.png";
+        }
+    }
+    class Player : ICreature
+    {
+        public CreatureCommand Act(int x, int y)
+        {
+            switch(Game.KeyPressed)
+            {
+                case System.Windows.Forms.Keys.Up:
+                    if(y - 1 >= 0 && (Game.Map[x, y - 1]?.ToString() != "Digger.Sack")) return new CreatureCommand() { DeltaX = 0, DeltaY = -1 }; else return new CreatureCommand() { DeltaX = 0, DeltaY = 0 };
+                   
+                case System.Windows.Forms.Keys.Down:
+                    if (y + 1 < Game.MapHeight && (Game.Map[x, y + 1]?.ToString() != "Digger.Sack")) return new CreatureCommand() { DeltaX = 0, DeltaY = 1 }; else return new CreatureCommand() { DeltaX = 0, DeltaY = 0 };
+                   
+                case System.Windows.Forms.Keys.Left:
+                    if (x - 1 >= 0 && (Game.Map[x - 1, y]?.ToString() != "Digger.Sack")) return new CreatureCommand() { DeltaX = -1, DeltaY = 0 }; else return new CreatureCommand() { DeltaX = 0, DeltaY = 0 };
+                  
+                case System.Windows.Forms.Keys.Right:
+                    if (x + 1 < Game.MapWidth && (Game.Map[x + 1, y]?.ToString() != "Digger.Sack")) return new CreatureCommand() { DeltaX = 1, DeltaY = 0 }; else return new CreatureCommand() { DeltaX = 0, DeltaY = 0 };
+                   
+                default: return new CreatureCommand() { DeltaX = 0, DeltaY = 0 };
+            }
+
+        }
+
+        public bool DeadInConflict(ICreature conflictedObject)
+        {
+           // CreatureCommand a = conflictedObject.Act(0, 0);
+            return false;
+        }
+
+        public int GetDrawingPriority()
+        {
+            return 0;
+        }
+
+        public string GetImageFileName()
+        {
+            return "Digger.png";
+        }
+    }
+
+    class Sack : ICreature
+    {
+        int counter = new int();
+        public CreatureCommand Act(int x, int y)
+        {
+
+            if (y < Game.MapHeight - 1)
+            {
+                var map = Game.Map[x, y + 1];
+                if (map == null/* || (counter > 0 && map.ToString() == "Digger.Player")*/)
+                {
+                    counter++;
+                    return new CreatureCommand() { DeltaX = 0, DeltaY = 1 };
+                }
+            }
+
+            if (counter >= 1 && y < Game.MapHeight - 1 && Game.Map[x, y + 1] is Player) { Game.Map[x, y + 1] = null; return new CreatureCommand() { DeltaX = 0, DeltaY = 1 }; } 
+    
+
+            if (counter > 1)
+                {
+                    counter = 0;
+                   
+                    return new CreatureCommand() { DeltaX = 0, DeltaY = 0, TransformTo = new Gold() };
+
+                }
+            
+                counter = 0;
+                return new CreatureCommand() { DeltaX = 0, DeltaY = 0 };
+
+            
+        }
+
+        public bool DeadInConflict(ICreature conflictedObject)
+        {
+            return false;
+        }
+
+        public int GetDrawingPriority()
+        {
+            return 1;
+        }
+
+        public string GetImageFileName()
+        {
+            return "Sack.png";
+        }
+    }
+
+    class Gold : ICreature
+    {
+        public CreatureCommand Act(int x, int y)
+        {
+            return new CreatureCommand() { DeltaX = 0, DeltaY = 0 };
+        }
+
+        public bool DeadInConflict(ICreature conflictedObject)
+        {
+            Game.Scores += 10;
+             return true;
+        }
+
+        public int GetDrawingPriority()
+        {
+            return 1;
+        }
+
+        public string GetImageFileName()
+        {
+            return "Gold.png";
+        }
+    }
+}
