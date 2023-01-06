@@ -1,0 +1,45 @@
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Recognizer
+{
+	internal static class MedianFilterTask
+	{
+		/* 
+		 * Для борьбы с пиксельным шумом, подобным тому, что на изображении,
+		 * обычно применяют медианный фильтр, в котором цвет каждого пикселя, 
+		 * заменяется на медиану всех цветов в некоторой окрестности пикселя.
+		 * https://en.wikipedia.org/wiki/Median_filter
+		 * 
+		 * Используйте окно размером 3х3 для не граничных пикселей,
+		 * Окно размером 2х2 для угловых и 3х2 или 2х3 для граничных.
+		 */
+		public static double[,] MedianFilter(double[,] original)
+		{
+			var medianShadesOfGray = new double[original.GetLength(0), original.GetLength(1)];
+			int xSize = original.GetLength(0);
+			int ySize = original.GetLength(1);
+			for (int x = 0; x < xSize; x++)
+				for (int y = 0; y < ySize; y++)
+                {
+					List<double> neighborhood = new List<double>();
+					neighborhood.Add(original[x, y]);
+					if (x > 0) neighborhood.Add(original[x - 1, y]);
+					if (y > 0) neighborhood.Add(original[x , y - 1]);
+					if (x > 0 && y > 0) neighborhood.Add(original[x - 1, y - 1]);
+					if (y < ySize -1) neighborhood.Add(original[x, y + 1]);
+					if (y < ySize -1 && x < xSize -1) neighborhood.Add(original[x + 1, y + 1]);
+					if (y < ySize -1 && x > 0) neighborhood.Add(original[x - 1, y + 1]);
+					if (x < xSize -1) neighborhood.Add(original[x + 1, y]);
+					if (x < xSize -1 && y > 0) neighborhood.Add(original[x + 1, y - 1]);
+					neighborhood.Sort();
+					if (neighborhood.Count % 2 == 0)
+					{
+						medianShadesOfGray[x, y] = (neighborhood[neighborhood.Count / 2 ] + neighborhood[neighborhood.Count / 2 - 1]) / 2.0;
+					}
+					else medianShadesOfGray[x, y] = neighborhood[neighborhood.Count / 2];
+				}
+			return medianShadesOfGray;
+		}
+	}
+}
