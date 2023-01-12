@@ -1,0 +1,22 @@
+using System.Collections.Generic;
+
+namespace Recognizer
+{
+	public static class ThresholdFilterTask
+	{
+		public static double[,] ThresholdFilter(double[,] original, double whitePixelsFraction)
+		{
+			int countWhite = (int)(original.GetLength(0) * original.GetLength(1) * whitePixelsFraction);
+			var pixelList = new List<double>();
+			foreach(var pixel in original)
+				pixelList.Add(pixel);
+			pixelList.Sort();
+			double thresholdValue = (countWhite != 0) ? pixelList[pixelList.Count - countWhite] : double.MaxValue;
+			for (int i = 0; i < original.GetLength(0); i++)
+				for(int j = 0; j < original.GetLength(1); j++)
+					if(original[i, j] >= thresholdValue) original[i, j] = 1.0; 
+			else original[i, j] = 0.0;
+			return original;
+		}
+	}
+}
