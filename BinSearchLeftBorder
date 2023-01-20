@@ -1,0 +1,9 @@
+public static int BinSearchLeftBorder(long[] array, long value, int left, int right)
+    {
+        if (left >= array.Length - 1) return array.Length - 1;
+        if (array.Length == 0 || array[left + 1] >= value) return left;
+        var m = (left + right) / 2;
+        if (array[m] < value)
+            return BinSearchLeftBorder(array, value, m, right);
+        return BinSearchLeftBorder(array, value, left, m);
+    }
