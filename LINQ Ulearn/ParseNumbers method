@@ -1,0 +1,7 @@
+public static int[] ParseNumbers(IEnumerable<string> lines)
+{
+	return lines
+		.Where(x => int.TryParse(x, out int result))
+		.Select(x => int.Parse(x))
+		.ToArray();
+}
