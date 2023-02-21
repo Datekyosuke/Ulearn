@@ -1,0 +1,6 @@
+ return textLines.SelectMany( x => Regex.Split(x, @"\W+"))
+                            .Select(x => x.ToLower())
+                            .Where(i => i != "")
+                            .OrderBy(x => x)
+                            .Distinct()
+                            .ToArray();
