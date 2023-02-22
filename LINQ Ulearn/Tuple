@@ -1,0 +1,11 @@
+public static List<string>  GetSortedWords(string text)
+{
+	return ( Regex.Split(text, @"\W+"))
+		.Select(x => x.ToLower()) 
+		.Where(i => i != "")
+        .Distinct()
+        .GroupBy(word => word.Length)
+        .OrderBy(group => group.Key)
+        .Select(en => en.OrderBy(word => word))
+        .SelectMany(order => order.AsEnumerable()).ToList();
+}
