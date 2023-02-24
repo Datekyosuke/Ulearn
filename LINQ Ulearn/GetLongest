@@ -1,0 +1,4 @@
+public static string GetLongest(IEnumerable<string> words)
+{
+	return words.Where(z => z.Length == (words.Max(n => n.Length))).Min();
+}
