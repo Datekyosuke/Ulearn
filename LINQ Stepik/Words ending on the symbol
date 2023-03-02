@@ -1,0 +1,16 @@
+using System;
+using System.Linq;
+
+public class MainClass
+{
+    public static void Main()
+    {
+        var text = Console.ReadLine().Split(' ');
+        var simbol = Console.ReadLine().ToLower();
+        var word = text.Select(x => x).Where(x => x.EndsWith(simbol)).ToList();
+
+        if (word.Count == 0) { Console.WriteLine("Нет такого слова");}
+        else if(word.Count > 1) { Console.WriteLine("Ошибка"); }
+        else { Console.WriteLine(word[0]); }
+    }
+}
