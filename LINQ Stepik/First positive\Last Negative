@@ -1,0 +1,11 @@
+using System.Linq;
+using System;
+
+public class MainClass
+{
+    public static void Main()
+    {
+        var text = Console.ReadLine().Split(' ').Select(Int32.Parse);
+        Console.WriteLine(text.First(x => x > 0) + " " + text.Last(x => x < 0));
+    }
+}
